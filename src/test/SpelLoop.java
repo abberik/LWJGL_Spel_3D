@@ -18,11 +18,11 @@ public class SpelLoop {
 	public static void main(String[] args) {
 
 		DisplayHanterare.skapaDisplay();
-		
+
 		Laddare laddare = new Laddare();
 		StatiskShader shader = new StatiskShader();
 		Renderare renderare = new Renderare(shader);
-		
+
 		float[] vertices = {			
 				-0.5f,0.5f,-0.5f,	
 				-0.5f,-0.5f,-0.5f,	
@@ -102,38 +102,31 @@ public class SpelLoop {
 
 		};
 		
-
-         
-
-         
-
-		
-		
-		RaaModel model = laddare.laddaTilVAO(vertices,texturKoordinater,indices);
+		RaaModel model = laddare.laddaTilVAO(vertices, texturKoordinater, indices);
 		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("stenblock"));
-		TextureradModell texturerad_modell = new TextureradModell(model,modelTextur);
-		
-		Entity entity = new Entity(texturerad_modell,new Vector3f(0,0,-1),0,0,0,1);
-		
+		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
+
+		Entity entity = new Entity(texturerad_modell, new Vector3f(0, 0, -1), 0, 0, 0, 1);
+
 		Kamera kamera = new Kamera();
-		
-		while(!Display.isCloseRequested()){
-			
+
+		while (!Display.isCloseRequested()) {
+
 			entity.okaPosition(0, 0, 0);
 			entity.okaRotation(1, 1, 1);
 			kamera.move();
 			renderare.forbered();
 			shader.starta();
 			shader.laddaVyMatris(kamera);
-			renderare.renderera(entity,shader);
+			renderare.renderera(entity, shader);
 			shader.stoppa();
-	
+
 			DisplayHanterare.uppdateraDisplay();
 		}
 		shader.stada();
 		laddare.stada();
 		DisplayHanterare.stangDisplay();
-		
+
 	}
-	
+
 }

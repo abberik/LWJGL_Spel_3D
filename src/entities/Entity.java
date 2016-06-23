@@ -6,12 +6,12 @@ import modeller.TextureradModell;
 
 public class Entity {
 
-	private TextureradModell model; 
-	
+	private TextureradModell model;
+
 	private Vector3f position;
-	
+
 	private float rotX, rotY, rotZ;
-	
+
 	private float scale;
 
 	public Entity(TextureradModell model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
@@ -22,24 +22,22 @@ public class Entity {
 		this.rotZ = rotZ;
 		this.scale = scale;
 	}
-	
-	public void okaPosition(float dx, float dy, float dz){
-		
+
+	public void okaPosition(float dx, float dy, float dz) {
+
 		this.position.x += dx;
 		this.position.y += dy;
 		this.position.z += dz;
-		
+
 	}
-	
-	public void okaRotation(float drx, float dry, float drz){
-		
+
+	public void okaRotation(float drx, float dry, float drz) {
+
 		this.rotX += drx;
 		this.rotY += dry;
 		this.rotZ += drz;
-		
+
 	}
-	
-	
 
 	public TextureradModell getModel() {
 		return model;
@@ -88,7 +86,5 @@ public class Entity {
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
-	
-	
-	
+
 }
