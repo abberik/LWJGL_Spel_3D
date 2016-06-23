@@ -1,0 +1,39 @@
+#version 400 core
+
+in vec2 pass_textur_koordinater;
+in vec3 yt_normal;
+in vec3 tillLjusVektor;
+in vec3 tillKameraVektor;
+
+out vec4 out_Color;
+
+uniform sampler2D texturSampler;
+
+uniform vec3 ljus_farg;
+
+uniform float shineDamper;
+uniform float reflektivitet;
+
+void main(void){
+
+	vec3 enhet_normal = normalize(yt_normal);
+	vec3 enhet_tillLjusVektor = normalize(tillLjusVektor);
+	
+	float dot_produkt = dot(enhet_normal,enhet_tillLjusVektor);
+	
+	float ljus_styrka = max(dot_produkt,0.2);
+	vec3 diffus = ljus_styrka * ljus_farg;
+	
+	vec3 enhet_vektor_till_kamera = normalize(tillKameraVektor);
+	vec3 ljusriktning = -tillLjusVektor;
+	vec3 reflektionsRiktning = reflect(ljusriktning,enhet_normal);
+	
+	float specularFactor = dot(reflektionsRiktning,enhet_vektor_till_kamera);
+	specularFactor = max(specularFactor,0.0);
+	float dampedFactor = pow(specularFactor,shineDamper);
+	vec3 finalSpecular = dampedFactor * reflektivitet * ljus_farg;
+	
+	
+	out_Color = vec4(diffus,1.0) * texture(texturSampler,pass_textur_koordinater) + vec4(finalSpecular,1.0);
+
+}

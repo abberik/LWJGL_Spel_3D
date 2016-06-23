@@ -17,33 +17,25 @@ import shaders.StatiskShader;
 import texturer.ModelTextur;
 import verktygslada.Matematik;
 
-public class Renderare {
+public class EntityRenderare {
 
 	private static final float FOV = 70;
 	private static final float NEAR_PLANE = 0.1f;
 	private static final float FAR_PLANE = 1000;
 
-	private Matrix4f projektionsmatris;
+
 
 	private StatiskShader statiskShader;
 	
 	
-	public Renderare(StatiskShader statiskShader) {
+	public EntityRenderare(StatiskShader statiskShader, Matrix4f projektionsmatris) {
 		this.statiskShader = statiskShader;
-		skapaProjektionsMatris();
 		statiskShader.starta();
 		statiskShader.laddaProjektionsMatris(projektionsmatris);
 		statiskShader.stoppa();
 
 	}
 
-	public void forbered() {
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
-		GL11.glClearColor(0, 0, 0, 1);
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-	}
 
 	public void rendera(Map<TextureradModell,List<Entity>> entities){
 		
@@ -102,21 +94,6 @@ public class Renderare {
 	
 
 
-	private void skapaProjektionsMatris() {
-
-		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
-		float x_scale = y_scale / aspectRatio;
-		float frustum_length = FAR_PLANE - NEAR_PLANE;
-
-		projektionsmatris = new Matrix4f();
-		projektionsmatris.m00 = x_scale;
-		projektionsmatris.m11 = y_scale;
-		projektionsmatris.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-		projektionsmatris.m23 = -1;
-		projektionsmatris.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-		projektionsmatris.m33 = 0;
-
-	}
+	
 
 }

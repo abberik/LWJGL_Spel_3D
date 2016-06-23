@@ -12,6 +12,7 @@ import renderingsMotor.DisplayHanterare;
 import renderingsMotor.Laddare;
 import renderingsMotor.MastarRenderare;
 import renderingsMotor.OBJLaddare;
+import terrang.Terrang;
 import texturer.ModelTextur;
 
 public class SpelLoop {
@@ -30,17 +31,21 @@ public class SpelLoop {
 
 		Entity entity = new Entity(texturerad_modell, new Vector3f(0, 0, -15), 0, 0, 1, 1);
 		Ljus ljus = new Ljus(new Vector3f(10, 10, 0), new Vector3f(1, 1, 1));
+		
+		Terrang terrang1 = new Terrang(0,0,laddare,new ModelTextur(laddare.laddaTextur("gras")));
+		Terrang terrang2 = new Terrang(1,0,laddare,new ModelTextur(laddare.laddaTextur("vatten")));
+		
 		Kamera kamera = new Kamera();
 
 		MastarRenderare mastarRenderare = new MastarRenderare();
 
 		while (!Display.isCloseRequested()) {
 
-			entity.okaPosition(0, 0, 0);
-
-			entity.okaRotation(0, 2, 0);
 			kamera.move();
-
+			
+			mastarRenderare.processTerrang(terrang1);
+			mastarRenderare.processTerrang(terrang2);
+			
 			mastarRenderare.processEntity(entity);
 			mastarRenderare.render(ljus, kamera);
 
