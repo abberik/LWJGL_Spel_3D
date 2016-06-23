@@ -16,25 +16,25 @@ public class Kamera {
 
 	public void move() {
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 
 			position.z -= 0.02f;
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 
 			position.z += 0.02f;
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_D) ) {
 
 			position.x += 0.02f;
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_A) ) {
 
 			position.x -= 0.02f;
 
@@ -51,6 +51,30 @@ public class Kamera {
 			position.y -= 0.02f;
 
 		}
+	
+		
+//		Kod för att få kameran att rotera.
+//		if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
+//			this.pitch -= 1;
+//		}
+//		
+//		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+//			
+//			this.pitch += 1;
+//			
+//		}
+//		
+//		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+//			
+//			this.yaw += 1;
+//			
+//		}
+//
+//		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+//	
+//			this.yaw -= 1;
+//			
+//		}
 
 	}
 

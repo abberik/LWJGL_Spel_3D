@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -27,10 +28,10 @@ public class OBJLaddare {
 		
 		String rad;
 		
-		ArrayList<Vector3f> verticesList = new ArrayList<Vector3f>();
-		ArrayList<Vector2f> texturesList = new ArrayList<Vector2f>();
-		ArrayList<Vector3f> normalList = new ArrayList<Vector3f>();
-		ArrayList<Integer> indices = new ArrayList<Integer>();
+		List<Vector3f> verticesList = new ArrayList<Vector3f>();
+		List<Vector2f> texturesList = new ArrayList<Vector2f>();
+		List<Vector3f> normalList = new ArrayList<Vector3f>();
+		List<Integer> indices = new ArrayList<Integer>();
 		
 		float[] verticesArray = null;
 		float[] texturesArray = null;
@@ -55,7 +56,7 @@ public class OBJLaddare {
 					Vector3f normal = new Vector3f(Float.parseFloat(inData[1]),Float.parseFloat(inData[2]),Float.parseFloat(inData[3]));
 					normalList.add(normal);
 					
-				}else if(rad.startsWith("vn ")){
+				}else if(rad.startsWith("vt ")){
 					
 					Vector2f texture = new Vector2f(Float.parseFloat(inData[1]),Float.parseFloat(inData[2]));
 					texturesList.add(texture);
@@ -118,7 +119,7 @@ public class OBJLaddare {
 	
 	
 	
-	private static void processeraVertex(String[] vertexData, ArrayList<Integer> indices, ArrayList<Vector2f> texturer, ArrayList<Vector3f> normaler, float[] texturArray, float[] normalArray ) {
+	private static void processeraVertex(String[] vertexData, List<Integer> indices, List<Vector2f> texturer, List<Vector3f> normaler, float[] texturArray, float[] normalArray ) {
 		
 		int aktuellaVertexPekaren = Integer.parseInt(vertexData[0]) - 1 ;
 		indices.add(aktuellaVertexPekaren);
