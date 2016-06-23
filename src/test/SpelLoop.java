@@ -44,7 +44,7 @@ public class SpelLoop {
 		
 		RaaModel model = laddare.laddaTilVAO(vertices,texturKoordinater,indices);
 		
-		TextureradModell texturerad_modell = new TextureradModell(model,new ModelTextur(laddare.laddaTextur("sten")));
+		TextureradModell texturerad_modell = new TextureradModell(model,new ModelTextur(laddare.laddaTextur("mossigsten")));
 		
 		while(!Display.isCloseRequested()){
 			

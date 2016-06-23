@@ -28,9 +28,9 @@ public class Laddare {
 		int vaoID = skapaVAO();
 		bindIndicesBuffer(indices);
 		lagraDataIAttributLista(0,3, positioner);
-		lagraDataIAttributLista(0,2, texturkoordinater);
+		lagraDataIAttributLista(1,2, texturkoordinater);
 		unbindVAO();
-		return new RaaModel(vaoID,positioner.length / 3);
+		return new RaaModel(vaoID,indices.length);
 		
 	}
 	
@@ -48,18 +48,15 @@ public class Laddare {
 		try {
 			
 			
-			textur = TextureLoader.getTexture("png",new FileInputStream("res/" + filNamn + ".png"));
+			textur = TextureLoader.getTexture("PNG",new FileInputStream("res/" + filNamn + ".png"));
 		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		int texturID = textur.getTextureID();
-		
-		texturer.add(texturID);
-		return texturID;
+		texturer.add(textur.getTextureID());
+		return textur.getTextureID();
 	}
 	
 	private void lagraDataIAttributLista(int attributNummer,int koordinatstorlek, float[] data){
