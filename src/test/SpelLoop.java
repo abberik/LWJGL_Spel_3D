@@ -1,14 +1,17 @@
 package test;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector3f;
 
+import entities.Entity;
+import entities.Kamera;
 import modeller.RaaModel;
+import modeller.TextureradModell;
 import renderingsMotor.DisplayHanterare;
 import renderingsMotor.Laddare;
 import renderingsMotor.Renderare;
 import shaders.StatiskShader;
 import texturer.ModelTextur;
-import modeller.TextureradModell;
 
 public class SpelLoop {
 
@@ -17,43 +20,112 @@ public class SpelLoop {
 		DisplayHanterare.skapaDisplay();
 		
 		Laddare laddare = new Laddare();
-		Renderare renderare = new Renderare();
 		StatiskShader shader = new StatiskShader();
+		Renderare renderare = new Renderare(shader);
 		
-        float[] vertices = {            
-                -0.5f,0.5f,0,   //V0
-                -0.5f,-0.5f,0,  //V1
-                0.5f,-0.5f,0,   //V2
-                0.5f,0.5f,0     //V3
-        };
+		float[] vertices = {			
+				-0.5f,0.5f,-0.5f,	
+				-0.5f,-0.5f,-0.5f,	
+				0.5f,-0.5f,-0.5f,	
+				0.5f,0.5f,-0.5f,		
+				
+				-0.5f,0.5f,0.5f,	
+				-0.5f,-0.5f,0.5f,	
+				0.5f,-0.5f,0.5f,	
+				0.5f,0.5f,0.5f,
+				
+				0.5f,0.5f,-0.5f,	
+				0.5f,-0.5f,-0.5f,	
+				0.5f,-0.5f,0.5f,	
+				0.5f,0.5f,0.5f,
+				
+				-0.5f,0.5f,-0.5f,	
+				-0.5f,-0.5f,-0.5f,	
+				-0.5f,-0.5f,0.5f,	
+				-0.5f,0.5f,0.5f,
+				
+				-0.5f,0.5f,0.5f,
+				-0.5f,0.5f,-0.5f,
+				0.5f,0.5f,-0.5f,
+				0.5f,0.5f,0.5f,
+				
+				-0.5f,-0.5f,0.5f,
+				-0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,0.5f
+				
+		};
+		
+		float[] texturKoordinater = {
+				
+				0,0,
+				0,1,
+				1,1,
+				1,0,			
+				0,0,
+				0,1,
+				1,1,
+				1,0,			
+				0,0,
+				0,1,
+				1,1,
+				1,0,
+				0,0,
+				0,1,
+				1,1,
+				1,0,
+				0,0,
+				0,1,
+				1,1,
+				1,0,
+				0,0,
+				0,1,
+				1,1,
+				1,0
+
+				
+		};
+		
+		int[] indices = {
+				0,1,3,	
+				3,1,2,	
+				4,5,7,
+				7,5,6,
+				8,9,11,
+				11,9,10,
+				12,13,15,
+				15,13,14,	
+				16,17,19,
+				19,17,18,
+				20,21,23,
+				23,21,22
+
+		};
+		
+
          
-        float[] texturKoordinater = {
-                 
-                0,0,
-                0,1,
-                1,1,
-                1,0
-                 
-        };
+
          
-        int[] indices = {
-                0,1,3,  //Top left triangle (V0,V1,V3)
-                3,1,2   //Bottom right triangle (V3,V1,V2)
-        };
+
 		
 		
 		RaaModel model = laddare.laddaTilVAO(vertices,texturKoordinater,indices);
+		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("stenblock"));
+		TextureradModell texturerad_modell = new TextureradModell(model,modelTextur);
 		
-		TextureradModell texturerad_modell = new TextureradModell(model,new ModelTextur(laddare.laddaTextur("mossigsten")));
+		Entity entity = new Entity(texturerad_modell,new Vector3f(0,0,-1),0,0,0,1);
+		
+		Kamera kamera = new Kamera();
 		
 		while(!Display.isCloseRequested()){
 			
-			
-			
+			entity.okaPosition(0, 0, 0);
+			entity.okaRotation(1, 1, 1);
+			kamera.move();
 			renderare.forbered();
 			shader.starta();
-			//logik
-			renderare.renderera(texturerad_modell);
+			shader.laddaVyMatris(kamera);
+			renderare.renderera(entity,shader);
 			shader.stoppa();
 	
 			DisplayHanterare.uppdateraDisplay();

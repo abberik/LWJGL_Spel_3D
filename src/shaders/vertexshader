@@ -5,9 +5,13 @@ in vec2 texturkoordinater;
 
 out vec2 pass_textur_koordinater; 
 
+uniform mat4 transformationsmatris;
+uniform mat4 projektionsmatris;
+uniform mat4 vymatris;
+
 void main(void){
 	
-	gl_Position = vec4(position,1.0);
+	gl_Position = projektionsmatris * vymatris *  transformationsmatris * vec4(position,1.0);
 	
 	pass_textur_koordinater = texturkoordinater;
 	
