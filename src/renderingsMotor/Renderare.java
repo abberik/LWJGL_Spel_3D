@@ -11,6 +11,7 @@ import entities.Entity;
 import modeller.RaaModel;
 import modeller.TextureradModell;
 import shaders.StatiskShader;
+import texturer.ModelTextur;
 import verktygslada.Matematik;
 
 public class Renderare {
@@ -32,7 +33,7 @@ public class Renderare {
 
 	public void forbered() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glClearColor(1, 1, 1, 1);
+		GL11.glClearColor(0, 0, 0, 1);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 
@@ -50,7 +51,11 @@ public class Renderare {
 				entity.getRotY(), entity.getRotZ(), entity.getScale());
 
 		shader.laddaTransformationsMatris(transformationsmatris);
-
+		
+		ModelTextur modelTextur = textureradModell.getTextur();
+		
+		shader.loadShineVariables(modelTextur.getShinedamper(), modelTextur.getReflektivitet());
+		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureradModell.getTextur().getID());
 		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getAntal_vertexar(), GL11.GL_UNSIGNED_INT, 0);

@@ -7,6 +7,8 @@ in vec3 normal;
 out vec2 pass_textur_koordinater; 
 out vec3 yt_normal;
 out vec3 tillLjusVektor;
+out vec3 ljuspos;
+out vec3 tillKameraVektor;
 
 uniform mat4 transformationsmatris;
 uniform mat4 projektionsmatris;
@@ -24,4 +26,7 @@ void main(void){
 	yt_normal = (transformationsmatris * vec4(normal,0.0)).xyz;
 	
 	tillLjusVektor = ljus_position - varld_position.xyz;
+	
+	tillKameraVektor = (inverse(vymatris) * vec4(0.0,0.0,0.0,1.0)).xyz - varld_position.xyz;
+	
 }

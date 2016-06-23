@@ -16,7 +16,9 @@ public class StatiskShader extends ShaderProgram {
 	private int plats_vymatris;
 	private int plats_ljus_position;
 	private int plats_ljus_farg;
-
+	private int plats_reflektivitet;
+	private int plats_shineDamper;
+	
 	public StatiskShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
@@ -31,12 +33,15 @@ public class StatiskShader extends ShaderProgram {
 
 	@Override
 	protected void getAllUniformLocation() {
-		// TODO Auto-generated method stub
+		
 		plats_forvandlingsmatris = super.getUniformLocation("transformationsmatris");
 		plats_projektionsmatris = super.getUniformLocation("projektionsmatris");
 		plats_vymatris = super.getUniformLocation("vymatris");
 		plats_ljus_farg = super.getUniformLocation("ljus_farg");
 		plats_ljus_position = super.getUniformLocation("ljus_position");
+		plats_shineDamper = super.getUniformLocation("shineDamper");
+		plats_reflektivitet = super.getUniformLocation("reflektivitet");
+		
 	}
 
 	public void laddaTransformationsMatris(Matrix4f matris) {
@@ -50,6 +55,11 @@ public class StatiskShader extends ShaderProgram {
 	public void laddaLjus(Ljus ljus){
 		super.loadVector(plats_ljus_farg, ljus.getFarg());
 		super.loadVector(plats_ljus_position, ljus.getPosition());
+	}
+	
+	public void loadShineVariables(float damper, float reflektivitet){
+		super.loadFloat(plats_reflektivitet, reflektivitet);
+		super.loadFloat(plats_shineDamper, damper);
 	}
 
 	public void laddaVyMatris(Kamera kamera) {

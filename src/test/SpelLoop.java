@@ -24,12 +24,14 @@ public class SpelLoop {
 		Laddare laddare = new Laddare();
 		StatiskShader shader = new StatiskShader();
 		Renderare renderare = new Renderare(shader);
-		RaaModel model = OBJLaddare.laddaObjModel("stall", laddare);
-		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("stallTexture"));
+		RaaModel model = OBJLaddare.laddaObjModel("dragon", laddare);
+		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("rod"));
+		modelTextur.setReflektivitet(0.1f/100f);
+		//modelTextur.setShinedamper(0.01f);
 		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
 
-		Entity entity = new Entity(texturerad_modell, new Vector3f(0, 0, -15), 0, 0, 0, 1);
-		Ljus ljus = new Ljus(new Vector3f(0,0,0),new Vector3f(1,1,1));
+		Entity entity = new Entity(texturerad_modell, new Vector3f(0, 0, -15), 0, 0, 1, 1);
+		Ljus ljus = new Ljus(new Vector3f(10,10,0),new Vector3f(1,1,1));
 		Kamera kamera = new Kamera();
 
 		while (!Display.isCloseRequested()) {
