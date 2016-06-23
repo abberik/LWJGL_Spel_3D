@@ -10,9 +10,8 @@ import modeller.RaaModel;
 import modeller.TextureradModell;
 import renderingsMotor.DisplayHanterare;
 import renderingsMotor.Laddare;
+import renderingsMotor.MastarRenderare;
 import renderingsMotor.OBJLaddare;
-import renderingsMotor.Renderare;
-import shaders.StatiskShader;
 import texturer.ModelTextur;
 
 public class SpelLoop {
@@ -22,34 +21,33 @@ public class SpelLoop {
 		DisplayHanterare.skapaDisplay();
 
 		Laddare laddare = new Laddare();
-		StatiskShader shader = new StatiskShader();
-		Renderare renderare = new Renderare(shader);
 		RaaModel model = OBJLaddare.laddaObjModel("dragon", laddare);
 		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("rod"));
-		modelTextur.setReflektivitet(0.1f/100f);
-		//modelTextur.setShinedamper(0.01f);
+		modelTextur.setReflektivitet(0.1f / 100f);
+		// Shine damper kan sättas via : modelTextur.setShinedamper(0.01f); men
+		// verkar inte fungera på ett korrekt sätt, bug i min kod?
 		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
 
 		Entity entity = new Entity(texturerad_modell, new Vector3f(0, 0, -15), 0, 0, 1, 1);
-		Ljus ljus = new Ljus(new Vector3f(10,10,0),new Vector3f(1,1,1));
+		Ljus ljus = new Ljus(new Vector3f(10, 10, 0), new Vector3f(1, 1, 1));
 		Kamera kamera = new Kamera();
+
+		MastarRenderare mastarRenderare = new MastarRenderare();
 
 		while (!Display.isCloseRequested()) {
 
 			entity.okaPosition(0, 0, 0);
 
-			entity.okaRotation(0,2 , 0);
+			entity.okaRotation(0, 2, 0);
 			kamera.move();
-			renderare.forbered();
-			shader.starta();
-			shader.laddaLjus(ljus);
-			shader.laddaVyMatris(kamera);
-			renderare.renderera(entity, shader);
-			shader.stoppa();
+
+			mastarRenderare.processEntity(entity);
+			mastarRenderare.render(ljus, kamera);
 
 			DisplayHanterare.uppdateraDisplay();
 		}
-		shader.stada();
+
+		mastarRenderare.stada();
 		laddare.stada();
 		DisplayHanterare.stangDisplay();
 

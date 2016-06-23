@@ -21,7 +21,7 @@ void main(void){
 	
 	float dot_produkt = dot(enhet_normal,enhet_tillLjusVektor);
 	
-	float ljus_styrka = max(dot_produkt,0.0);
+	float ljus_styrka = max(dot_produkt,0.2);
 	vec3 diffus = ljus_styrka * ljus_farg;
 	
 	vec3 enhet_vektor_till_kamera = normalize(tillKameraVektor);

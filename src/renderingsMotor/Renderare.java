@@ -1,5 +1,8 @@
 package renderingsMotor;
 
+import java.util.List;
+import java.util.Map;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -22,57 +25,82 @@ public class Renderare {
 
 	private Matrix4f projektionsmatris;
 
-	public Renderare(StatiskShader shader) {
-
+	private StatiskShader statiskShader;
+	
+	
+	public Renderare(StatiskShader statiskShader) {
+		this.statiskShader = statiskShader;
 		skapaProjektionsMatris();
-		shader.starta();
-		shader.laddaProjektionsMatris(projektionsmatris);
-		shader.stoppa();
+		statiskShader.starta();
+		statiskShader.laddaProjektionsMatris(projektionsmatris);
+		statiskShader.stoppa();
 
 	}
 
 	public void forbered() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
 		GL11.glClearColor(0, 0, 0, 1);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void renderera(Entity entity, StatiskShader shader) {
-
-		TextureradModell textureradModell = entity.getModel();
+	public void rendera(Map<TextureradModell,List<Entity>> entities){
+		
+//		System.out.println(entities.size()); printade 1, stämmer
+		for(TextureradModell modell : entities.keySet()){
+			
+			forberedTextureradModell(modell);
+			
+			List<Entity> batch = entities.get(modell);											
+			
+//			System.out.println(entities.get(modell).size());  Printade 0, stämmer ej
+			for(Entity entity : batch){
+			
+				forberedInstans(entity);
+				GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getModel().getRaaModel().getAntal_vertexar(), GL11.GL_UNSIGNED_INT, 0);
+			
+			}
+			
+			unbindTextureradModell();
+			
+		}
+		
+	}
+	
+	private void forberedTextureradModell(TextureradModell textureradModell){
+	
 		RaaModel model = textureradModell.getRaaModel();
 
 		GL30.glBindVertexArray(model.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
-
-		Matrix4f transformationsmatris = Matematik.skapaTransformationsMatris(entity.getPosition(), entity.getRotX(),
-				entity.getRotY(), entity.getRotZ(), entity.getScale());
-
-		shader.laddaTransformationsMatris(transformationsmatris);
 		
 		ModelTextur modelTextur = textureradModell.getTextur();
-		
-		shader.loadShineVariables(modelTextur.getShinedamper(), modelTextur.getReflektivitet());
+		this.statiskShader.loadShineVariables(modelTextur.getShinedamper(), modelTextur.getReflektivitet());
 		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureradModell.getTextur().getID());
-		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getAntal_vertexar(), GL11.GL_UNSIGNED_INT, 0);
+		
+	}
+	
+	private void unbindTextureradModell(){
+		
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
 		GL30.glBindVertexArray(0);
-
-		//
-		// GL30.glBindVertexArray(model.getVaoID());
-		// GL20.glEnableVertexAttribArray(0);
-		// GL11.glDrawElements(GL11.GL_TRIANGLES,
-		// model.getAntal_vertexar(),GL11.GL_UNSIGNED_INT, 0);
-		// GL20.glDisableVertexAttribArray(0);
-		// GL30.glBindVertexArray(0);
-
+		
 	}
+	
+	private void forberedInstans(Entity entity){
+		Matrix4f transformationsmatris = Matematik.skapaTransformationsMatris(entity.getPosition(), entity.getRotX(),
+				entity.getRotY(), entity.getRotZ(), entity.getScale());
+		this.statiskShader.laddaTransformationsMatris(transformationsmatris);
+	}
+	
+
 
 	private void skapaProjektionsMatris() {
 
