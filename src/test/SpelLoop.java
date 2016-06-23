@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import entities.Kamera;
+import entities.Ljus;
 import modeller.RaaModel;
 import modeller.TextureradModell;
 import renderingsMotor.DisplayHanterare;
@@ -28,7 +29,7 @@ public class SpelLoop {
 		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
 
 		Entity entity = new Entity(texturerad_modell, new Vector3f(0, 0, -15), 0, 0, 0, 1);
-
+		Ljus ljus = new Ljus(new Vector3f(0,0,0),new Vector3f(1,1,1));
 		Kamera kamera = new Kamera();
 
 		while (!Display.isCloseRequested()) {
@@ -39,6 +40,7 @@ public class SpelLoop {
 			kamera.move();
 			renderare.forbered();
 			shader.starta();
+			shader.laddaLjus(ljus);
 			shader.laddaVyMatris(kamera);
 			renderare.renderera(entity, shader);
 			shader.stoppa();

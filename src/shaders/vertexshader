@@ -2,17 +2,26 @@
 
 in vec3 position;
 in vec2 texturkoordinater;
+in vec3 normal;
 
 out vec2 pass_textur_koordinater; 
+out vec3 yt_normal;
+out vec3 tillLjusVektor;
 
 uniform mat4 transformationsmatris;
 uniform mat4 projektionsmatris;
 uniform mat4 vymatris;
+uniform vec3 ljus_position;
 
 void main(void){
 	
-	gl_Position = projektionsmatris * vymatris *  transformationsmatris * vec4(position,1.0);
+	vec4 varld_position = transformationsmatris * vec4(position,1.0);
+	
+	gl_Position = projektionsmatris * vymatris *  varld_position;
 	
 	pass_textur_koordinater = texturkoordinater;
 	
+	yt_normal = (transformationsmatris * vec4(normal,0.0)).xyz;
+	
+	tillLjusVektor = ljus_position - varld_position.xyz;
 }

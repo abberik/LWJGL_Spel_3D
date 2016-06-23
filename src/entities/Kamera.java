@@ -54,27 +54,27 @@ public class Kamera {
 	
 		
 //		Kod för att få kameran att rotera.
-//		if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
-//			this.pitch -= 1;
-//		}
-//		
-//		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-//			
-//			this.pitch += 1;
-//			
-//		}
-//		
-//		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-//			
-//			this.yaw += 1;
-//			
-//		}
-//
-//		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-//	
-//			this.yaw -= 1;
-//			
-//		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
+			this.pitch -= 1;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+			
+			this.pitch += 1;
+			
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			
+			this.yaw += 1;
+			
+		}
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+	
+			this.yaw -= 1;
+			
+		}
 
 	}
 

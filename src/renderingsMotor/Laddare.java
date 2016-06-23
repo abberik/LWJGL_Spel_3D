@@ -23,12 +23,13 @@ public class Laddare {
 	private ArrayList<Integer> vbos = new ArrayList<Integer>();
 	private ArrayList<Integer> texturer = new ArrayList<Integer>();
 
-	public RaaModel laddaTilVAO(float[] positioner, float[] texturkoordinater, int[] indices) {
+	public RaaModel laddaTilVAO(float[] positioner, float[] texturkoordinater,float[] normaler, int[] indices) {
 
 		int vaoID = skapaVAO();
 		bindIndicesBuffer(indices);
 		lagraDataIAttributLista(0, 3, positioner);
 		lagraDataIAttributLista(1, 2, texturkoordinater);
+		lagraDataIAttributLista(2, 3, normaler);
 		unbindVAO();
 		return new RaaModel(vaoID, indices.length);
 

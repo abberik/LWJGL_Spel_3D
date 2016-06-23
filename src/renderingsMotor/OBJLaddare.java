@@ -114,7 +114,7 @@ public class OBJLaddare {
 			
 		}
 
-		return laddare.laddaTilVAO(verticesArray, texturesArray, indicesArray);
+		return laddare.laddaTilVAO(verticesArray, texturesArray,normalArray, indicesArray);
 	}
 	
 	

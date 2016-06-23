@@ -44,6 +44,7 @@ public class Renderare {
 		GL30.glBindVertexArray(model.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
+		GL20.glEnableVertexAttribArray(2);
 
 		Matrix4f transformationsmatris = Matematik.skapaTransformationsMatris(entity.getPosition(), entity.getRotX(),
 				entity.getRotY(), entity.getRotZ(), entity.getScale());
@@ -55,6 +56,7 @@ public class Renderare {
 		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getAntal_vertexar(), GL11.GL_UNSIGNED_INT, 0);
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
+		GL20.glDisableVertexAttribArray(2);
 		GL30.glBindVertexArray(0);
 
 		//

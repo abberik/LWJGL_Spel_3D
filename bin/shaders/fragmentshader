@@ -1,13 +1,25 @@
 #version 400 core
 
 in vec2 pass_textur_koordinater;
+in vec3 yt_normal;
+in vec3 tillLjusVektor;
 
 out vec4 out_Color;
 
 uniform sampler2D texturSampler;
 
+uniform vec3 ljus_farg;
+
 void main(void){
 
-	out_Color = texture(texturSampler,pass_textur_koordinater);
+	vec3 enhet_normal = normalize(yt_normal);
+	vec3 enhet_tillLjusVektor = normalize(tillLjusVektor);
+	
+	float dot_produkt = dot(enhet_normal,enhet_tillLjusVektor);
+	
+	float ljus_styrka = max(dot_produkt,0.0);
+	vec3 diffus = ljus_styrka * ljus_farg;
+	
+	out_Color = vec4(diffus,1.0) * texture(texturSampler,pass_textur_koordinater);
 
 }
