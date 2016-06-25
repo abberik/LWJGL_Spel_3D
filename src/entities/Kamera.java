@@ -7,19 +7,32 @@ public class Kamera {
 
 	private Vector3f position = new Vector3f(0, 0, 0);
 	private float pitch;
-	private float yaw;
+	private float yaw; // Den som styr vart kameran siktar.
 	private float roll;
-
+	
+	private static final float walkspeed = 0.5f;
+	
+	
 	public Kamera() {
 
 	}
 
 	public void move() {
 
+		System.out.println("yaw = " + yaw);
+		System.out.println("X = " + position.x);
+		
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-
-			position.z -= 0.5f;
-
+			
+			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 90.0)));
+			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 90.0)));
+			
+			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
+			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
+		
+			position.x += forflyttning_langs_X;
+			position.z += forflyttning_langs_Z;
+			
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
@@ -28,16 +41,29 @@ public class Kamera {
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_D) ) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_E) ) {
 
-			position.x += 0.5f;
+			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw )));
+			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw )));
+			
+			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
+			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
+		
+			position.x += forflyttning_langs_X;
+			position.z += forflyttning_langs_Z;
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_A) ) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_Q) ) {
 
-			position.x -= 0.5f;
-
+			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 180.0)));
+			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 180.0)));
+			
+			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
+			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
+		
+			position.x += forflyttning_langs_X;
+			position.z += forflyttning_langs_Z;
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
@@ -64,15 +90,15 @@ public class Kamera {
 			
 		}
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 			
-			this.yaw += 1;
+			this.yaw += 0.5f;
 			
 		}
 
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_A)){
 	
-			this.yaw -= 1;
+			this.yaw -= 0.5f;
 			
 		}
 
