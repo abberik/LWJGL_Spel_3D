@@ -1,6 +1,7 @@
 package test;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -21,6 +22,8 @@ public class SpelLoop {
 
 	public static void main(String[] args) {
 
+		
+		
 		System.out.println(2048.0 / 64.0);
 		
 		DisplayHanterare.skapaDisplay();
@@ -60,10 +63,19 @@ public class SpelLoop {
 
 		MastarRenderare mastarRenderare = new MastarRenderare();
 
+		Mouse.setGrabbed(true);
+		
 		while (!Display.isCloseRequested()) {
 
-			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+			if(Keyboard.isKeyDown(Keyboard.KEY_END)){
+				Mouse.setGrabbed(false);
 				System.exit(0);
+			}
+			
+			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+				
+				Mouse.setGrabbed(!Mouse.isGrabbed());
+				
 			}
 			
 			kamera.move();
@@ -90,7 +102,7 @@ public class SpelLoop {
 
 			DisplayHanterare.uppdateraDisplay();
 		}
-
+		Mouse.setGrabbed(true);
 		mastarRenderare.stada();
 		laddare.stada();
 		DisplayHanterare.stangDisplay();

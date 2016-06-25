@@ -1,6 +1,7 @@
 package entities;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Kamera {
@@ -11,16 +12,20 @@ public class Kamera {
 	private float roll;
 	
 	private static final float walkspeed = 0.5f;
-	
+	private static final float sensitivity = 0.25f;
 	
 	public Kamera() {
 
 	}
 
 	public void move() {
-
-		System.out.println("yaw = " + yaw);
-		System.out.println("X = " + position.x);
+		
+		//Kod för att styra riktning med musen
+		
+		yaw += (Mouse.getDX() * sensitivity);
+		pitch += (Mouse.getDY() * (- sensitivity)); 
+		
+		//Kod för att styra riktning med musen
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			
@@ -37,11 +42,18 @@ public class Kamera {
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 
-			position.z += 0.5f;
+			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 270 )));
+			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 270)));
+			
+			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
+			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
+		
+			position.x += forflyttning_langs_X;
+			position.z += forflyttning_langs_Z;
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_E) ) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_D) ) {
 
 			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw )));
 			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw )));
@@ -54,7 +66,7 @@ public class Kamera {
 
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_Q) ) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_A) ) {
 
 			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 180.0)));
 			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 180.0)));
@@ -81,24 +93,24 @@ public class Kamera {
 		
 //		Kod för att få kameran att rotera.
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
-			this.pitch -= 1;
+			this.pitch -= 1.25f;
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
 			
-			this.pitch += 1;
+			this.pitch += 1.25f;
 			
 		}
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_D)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_E)){
 			
-			this.yaw += 0.5f;
+			this.yaw += 1.25f;
 			
 		}
 
-		if(Keyboard.isKeyDown(Keyboard.KEY_A)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
 	
-			this.yaw -= 0.5f;
+			this.yaw -= 1.25f;
 			
 		}
 
