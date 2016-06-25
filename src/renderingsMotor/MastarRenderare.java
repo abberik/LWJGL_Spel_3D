@@ -24,6 +24,10 @@ public class MastarRenderare {
 	private static final float NEAR_PLANE = 0.1f;
 	private static final float FAR_PLANE = 1000;
 	
+	private static final float ROD  = 0.6953125f;
+	private static final float GRON = 1f;
+	private static final float BLA  = 1f;
+	
 	private Matrix4f projektionsmatris;
 	
 	private StatiskShader entityShader = new StatiskShader();
@@ -61,12 +65,14 @@ public class MastarRenderare {
 	public void render(Ljus sol, Kamera kamera){
 		forbered();
 		entityShader.starta();
+		entityShader.laddaHimmelFarg(ROD, GRON, BLA);
 		entityShader.laddaLjus(sol);
 		entityShader.laddaVyMatris(kamera);
 		entityRenderare.rendera(entities);
 		entityShader.stoppa();
 		
 		terrangShader.starta();
+		terrangShader.laddaHimmelFarg(ROD, GRON, BLA);
 		terrangShader.laddaLjus(sol);
 		terrangShader.laddaVyMatris(kamera);
 		terrangRenderare.render(terranger);
@@ -103,7 +109,7 @@ public class MastarRenderare {
 	public void forbered() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-		GL11.glClearColor(0.6953125f, 1, 1, 1);
+		GL11.glClearColor(ROD,GRON,BLA, 1);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	

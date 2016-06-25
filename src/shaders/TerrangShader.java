@@ -1,6 +1,7 @@
 package shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import entities.Kamera;
 import entities.Ljus;
@@ -18,6 +19,7 @@ public class TerrangShader extends ShaderProgram{
 	private int plats_ljus_farg;
 	private int plats_reflektivitet;
 	private int plats_shineDamper;
+	private int plats_himmelfarg;
 	
 	public TerrangShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -41,9 +43,13 @@ public class TerrangShader extends ShaderProgram{
 		plats_ljus_position = super.getUniformLocation("ljus_position");
 		plats_shineDamper = super.getUniformLocation("shineDamper");
 		plats_reflektivitet = super.getUniformLocation("reflektivitet");
-		
+		plats_himmelfarg = super.getUniformLocation("himmelFarg");
 	}
 
+	public void laddaHimmelFarg(float rod, float gron, float bla ){
+		super.loadVector(plats_himmelfarg, new Vector3f(rod,gron,bla));
+	}
+	
 	public void laddaTransformationsMatris(Matrix4f matris) {
 		super.loadMatrix(plats_forvandlingsmatris, matris);
 	}

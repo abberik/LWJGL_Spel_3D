@@ -9,17 +9,23 @@ out vec3 yt_normal;
 out vec3 tillLjusVektor;
 out vec3 ljuspos;
 out vec3 tillKameraVektor;
+out float visibilitet;
 
 uniform mat4 transformationsmatris;
 uniform mat4 projektionsmatris;
 uniform mat4 vymatris;
 uniform vec3 ljus_position;
 
+const float dimm_densitet = 0.007;
+const float gradient = 1.5;
+
 void main(void){
 	
 	vec4 varld_position = transformationsmatris * vec4(position,1.0);
 	
 	gl_Position = projektionsmatris * vymatris *  varld_position;
+	
+	vec4 positionRelativtTillKamera = vymatris * varld_position;
 	
 	pass_textur_koordinater = texturkoordinater;
 	
@@ -29,4 +35,8 @@ void main(void){
 	
 	tillKameraVektor = (inverse(vymatris) * vec4(0.0,0.0,0.0,1.0)).xyz - varld_position.xyz;
 	
+	
+	float avstand = length(positionRelativtTillKamera.xyz);
+	visibilitet = exp(-pow((avstand * dimm_densitet),gradient));
+	visibilitet = clamp(visibilitet,0.0,1.0);
 }

@@ -1,6 +1,7 @@
 package shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import entities.Kamera;
 import entities.Ljus;
@@ -19,6 +20,7 @@ public class StatiskShader extends ShaderProgram {
 	private int plats_reflektivitet;
 	private int plats_shineDamper;
 	private int plats_anvandFakeLjus;
+	private int plats_himmelFarg;
 	
 	public StatiskShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -43,8 +45,13 @@ public class StatiskShader extends ShaderProgram {
 		plats_shineDamper = super.getUniformLocation("shineDamper");
 		plats_reflektivitet = super.getUniformLocation("reflektivitet");
 		plats_anvandFakeLjus = super.getUniformLocation("anvandFakeLjus");
+		plats_himmelFarg = super.getUniformLocation("himmelFarg");
 	}
 
+	public void laddaHimmelFarg(float rod, float gron, float bla ){
+		super.loadVector(plats_himmelFarg, new Vector3f(rod,gron,bla));
+	}
+	
 	public void laddaFakeLjus(boolean anvandFake){
 		super.loadBoolean(plats_anvandFakeLjus, anvandFake);
 	}
