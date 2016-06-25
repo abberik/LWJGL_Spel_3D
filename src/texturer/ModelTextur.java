@@ -6,6 +6,9 @@ public class ModelTextur {
 	private float shinedamper = 1;
 	private float reflektivitet = 0;
 	
+	private boolean hasTransparency = false;
+	private boolean anvanderFakeLjus = false;
+	
 	public ModelTextur(int id) {
 		this.texturID = id;
 	}
@@ -38,7 +41,23 @@ public class ModelTextur {
 		this.reflektivitet = reflektivitet;
 	}
 
+	public boolean isHasTransparency() {
+		return hasTransparency;
+	}
 
+	public void setHasTransparency(boolean hasTransparency) {
+		this.hasTransparency = hasTransparency;
+	}
+
+	public boolean isAnvanderFakeLjus() {
+		return anvanderFakeLjus;
+	}
+
+	public void setAnvanderFakeLjus(boolean anvanderFakeLjus) {
+		this.anvanderFakeLjus = anvanderFakeLjus;
+	}
+
+	
 	
 	
 }

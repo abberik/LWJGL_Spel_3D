@@ -33,6 +33,9 @@ public class Trad {
 		ModelTextur tradKonTextur = new ModelTextur(laddare.laddaTextur("trad_gren_1"));
 		ModelTextur tradStamTextur = new ModelTextur(laddare.laddaTextur("trad_stam"));
 		
+		tradKonTextur.setHasTransparency(false);
+		tradStamTextur.setHasTransparency(false);
+		
 		tradKonTextur.setReflektivitet(0.1f / 100f);
 		tradKonTextur.setShinedamper(0.05f);
 		
@@ -42,6 +45,7 @@ public class Trad {
 		TextureradModell tradKonTM = new TextureradModell(tradKonModel,tradKonTextur);
 		TextureradModell tradStamTM = new TextureradModell(tradStamModel,tradStamTextur);
 		
+		
 		entities.add(new Entity(tradStamTM,position,0,0,1,1));
 		entities.add( new Entity(tradKonTM,position,0,0,1,1));
 		entities.add(new Entity(tradKonTM,new Vector3f(position.x,position.y + 3.3f,position.z),0,0,1,1));
@@ -49,10 +53,30 @@ public class Trad {
 		
 		//Trad kod//
 		
+		
+		
 	}
 	
 	public void rendera(MastarRenderare mastarRenderare){
 		for(Entity entity : entities) mastarRenderare.processEntity(entity);
 	}
+
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
+	public void setEntities(ArrayList<Entity> entities) {
+		this.entities = entities;
+	}
+
+	public Vector3f getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+	
+	
 	
 }

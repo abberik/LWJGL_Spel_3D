@@ -70,6 +70,9 @@ public class EntityRenderare {
 		GL20.glEnableVertexAttribArray(2);
 		
 		ModelTextur modelTextur = textureradModell.getTextur();
+		
+		if(modelTextur.isHasTransparency()) MastarRenderare.avAktiveraCulling();
+		this.statiskShader.laddaFakeLjus(modelTextur.isAnvanderFakeLjus());
 		this.statiskShader.loadShineVariables(modelTextur.getShinedamper(), modelTextur.getReflektivitet());
 		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -78,7 +81,7 @@ public class EntityRenderare {
 	}
 	
 	private void unbindTextureradModell(){
-		
+		MastarRenderare.aktiveraCulling();
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);

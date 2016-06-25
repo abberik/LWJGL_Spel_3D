@@ -18,6 +18,7 @@ public class StatiskShader extends ShaderProgram {
 	private int plats_ljus_farg;
 	private int plats_reflektivitet;
 	private int plats_shineDamper;
+	private int plats_anvandFakeLjus;
 	
 	public StatiskShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -41,9 +42,13 @@ public class StatiskShader extends ShaderProgram {
 		plats_ljus_position = super.getUniformLocation("ljus_position");
 		plats_shineDamper = super.getUniformLocation("shineDamper");
 		plats_reflektivitet = super.getUniformLocation("reflektivitet");
-		
+		plats_anvandFakeLjus = super.getUniformLocation("anvandFakeLjus");
 	}
 
+	public void laddaFakeLjus(boolean anvandFake){
+		super.loadBoolean(plats_anvandFakeLjus, anvandFake);
+	}
+	
 	public void laddaTransformationsMatris(Matrix4f matris) {
 		super.loadMatrix(plats_forvandlingsmatris, matris);
 	}

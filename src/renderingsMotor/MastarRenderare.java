@@ -38,8 +38,7 @@ public class MastarRenderare {
 	public MastarRenderare() {
 	
 		// TODO Auto-generated constructor stub
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
+		MastarRenderare.aktiveraCulling();
 
 		skapaProjektionsMatris();
 		
@@ -48,6 +47,15 @@ public class MastarRenderare {
 			
 		entityRenderare = new EntityRenderare(entityShader,projektionsmatris);
 		terrangRenderare = new TerrangRenderare(terrangShader, projektionsmatris);
+	}
+	
+	public static void aktiveraCulling(){
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
+	}
+	
+	public static void avAktiveraCulling(){
+		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	
 	public void render(Ljus sol, Kamera kamera){
@@ -95,7 +103,7 @@ public class MastarRenderare {
 	public void forbered() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-		GL11.glClearColor(0, 0, 0, 1);
+		GL11.glClearColor(0.6953125f, 1, 1, 1);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	
