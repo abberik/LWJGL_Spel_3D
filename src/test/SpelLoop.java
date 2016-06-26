@@ -17,6 +17,8 @@ import renderingsMotor.OBJLaddare;
 import spel_objekt.Trad;
 import terrang.Terrang;
 import texturer.ModelTextur;
+import texturer.TerrangTextur;
+import texturer.TerrangTexturPaket;
 
 public class SpelLoop {
 
@@ -36,10 +38,10 @@ public class SpelLoop {
 		
 		
 		Trad trad1 = new Trad(laddare, new Vector3f(0,0,0));
-		Trad trad2 = new Trad(laddare, new Vector3f(10,0,10));
-		Trad trad3 = new Trad(laddare, new Vector3f(20,0,20));
-		Trad trad4 = new Trad(laddare, new Vector3f(30,0,30));
-		Trad trad5 = new Trad(laddare, new Vector3f(40,0,40));
+		Trad trad2 = new Trad(laddare, new Vector3f(-10,0,10));
+		Trad trad3 = new Trad(laddare, new Vector3f(00,0,20));
+		Trad trad4 = new Trad(laddare, new Vector3f(10,0,30));
+		Trad trad5 = new Trad(laddare, new Vector3f(20,0,40));
 		
 		Trad trad11 = new Trad(laddare, new Vector3f(30,0,0));
 		Trad trad22 = new Trad(laddare, new Vector3f(40,0,10));
@@ -53,11 +55,23 @@ public class SpelLoop {
 		Entity entity = new Entity(texturerad_modell, new Vector3f(1, 0, -15), 0, 120, 1, 1);
 		Ljus ljus = new Ljus(new Vector3f(200, 200, 0), new Vector3f(1, 1, 1));
 		
-		Terrang terrang1 = new Terrang(0,0,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-		Terrang terrang2 = new Terrang(0,-1,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-		Terrang terrang3 = new Terrang(-1,0,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-		Terrang terrang4 = new Terrang(-1,-1,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
+//		Terrang terrang1 = new Terrang(0,0,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
+//		Terrang terrang2 = new Terrang(0,-1,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
+//		Terrang terrang3 = new Terrang(-1,0,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
+//		Terrang terrang4 = new Terrang(-1,-1,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
 		
+		TerrangTextur terrangBakgrund = new TerrangTextur(laddare.laddaTextur("orange1"));
+		TerrangTextur rTerrangTextur = new TerrangTextur(laddare.laddaTextur("jord1"));
+		TerrangTextur gTerrangTextur = new TerrangTextur(laddare.laddaTextur("gras1"));
+		TerrangTextur bTerrangTextur = new TerrangTextur(laddare.laddaTextur("sten1"));
+		
+		TerrangTexturPaket terrangPaket = new TerrangTexturPaket(terrangBakgrund, rTerrangTextur, gTerrangTextur, bTerrangTextur);
+		TerrangTextur blend_textur= new TerrangTextur(laddare.laddaTextur("blend_karta"));
+		
+		Terrang terrang1 = new Terrang(0, 0, laddare, terrangPaket, blend_textur);
+		Terrang terrang2 = new Terrang(0, -1, laddare,terrangPaket, blend_textur);
+		Terrang terrang3 = new Terrang(-1, 0, laddare, terrangPaket, blend_textur);
+		Terrang terrang4 = new Terrang(-1, -1, laddare, terrangPaket, blend_textur);
 		
 		Kamera kamera = new Kamera();
 

@@ -3,6 +3,8 @@ package terrang;
 import modeller.RaaModel;
 import renderingsMotor.Laddare;
 import texturer.ModelTextur;
+import texturer.TerrangTextur;
+import texturer.TerrangTexturPaket;
 
 public class Terrang {
 
@@ -12,14 +14,16 @@ public class Terrang {
 	private float x;
 	private float z;
 	private RaaModel model;
-	private ModelTextur modelTextur;
-	
-	public Terrang(float gridX, float gridZ,Laddare laddare , ModelTextur modelTextur) {
+	private TerrangTexturPaket textur_paket;
+	private TerrangTextur blend_karta;
+		
+	public Terrang(float gridX, float gridZ,Laddare laddare ,TerrangTexturPaket textur_paket,TerrangTextur blend_karta) {
 		
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
 		this.model = generateTerrain(laddare);
-		this.modelTextur = modelTextur;
+		this.blend_karta = blend_karta;
+		this.textur_paket = textur_paket;
 		
 	}
 	
@@ -85,13 +89,31 @@ public class Terrang {
 		this.model = model;
 	}
 
-	public ModelTextur getModelTextur() {
-		return modelTextur;
+	public TerrangTexturPaket getTextur_paket() {
+		return textur_paket;
 	}
 
-	public void setModelTextur(ModelTextur modelTextur) {
-		this.modelTextur = modelTextur;
+	public void setTextur_paket(TerrangTexturPaket textur_paket) {
+		this.textur_paket = textur_paket;
 	}
+
+	public TerrangTextur getBlend_karta() {
+		return blend_karta;
+	}
+
+	public void setBlend_karta(TerrangTextur blend_karta) {
+		this.blend_karta = blend_karta;
+	}
+
+	public static float getSize() {
+		return SIZE;
+	}
+
+	public static int getVertexCount() {
+		return VERTEX_COUNT;
+	}
+
+	
 	
 	
 	

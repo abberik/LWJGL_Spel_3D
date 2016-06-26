@@ -14,18 +14,18 @@ import modeller.TextureradModell;
 import shaders.TerrangShader;
 import terrang.Terrang;
 import texturer.ModelTextur;
+import texturer.TerrangTexturPaket;
 import verktygslada.Matematik;
 
 public class TerrangRenderare {
 
 	private TerrangShader shader;
 	
-	
-	
 	public TerrangRenderare(TerrangShader shader, Matrix4f projektionsmatris) {
 		this.shader = shader;
 		shader.starta();
 		shader.laddaProjektionsMatris(projektionsmatris);
+		shader.anslutTexturEnheter();
 		shader.stoppa();
 	}
 	
@@ -51,12 +51,23 @@ public class TerrangRenderare {
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
 		
-		ModelTextur modelTextur = terrang.getModelTextur();
-		shader.loadShineVariables(modelTextur.getShinedamper(), modelTextur.getReflektivitet());
+		bindTexturer(terrang);
+		shader.loadShineVariables(1,0); //will be added latur
 		
+	}
+	
+	private void bindTexturer(Terrang terrang){
+		TerrangTexturPaket textur_paket = terrang.getTextur_paket();
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, modelTextur.getID());
-		
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textur_paket.getBakgrund().getTexturID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textur_paket.getrTextur().getTexturID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE2);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textur_paket.getgTextur().getTexturID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE3);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textur_paket.getbTextur().getTexturID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, terrang.getBlend_karta().getTexturID());
 	}
 	
 	private void unbindTextureradModell(){

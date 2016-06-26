@@ -20,6 +20,12 @@ public class TerrangShader extends ShaderProgram{
 	private int plats_reflektivitet;
 	private int plats_shineDamper;
 	private int plats_himmelfarg;
+	private int plats_bakgrundstextur;
+	private int plats_rtextur;
+	private int plats_gtextur;
+	private int plats_btextur;
+	private int plats_blend_textur;
+	
 	
 	public TerrangShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -44,6 +50,20 @@ public class TerrangShader extends ShaderProgram{
 		plats_shineDamper = super.getUniformLocation("shineDamper");
 		plats_reflektivitet = super.getUniformLocation("reflektivitet");
 		plats_himmelfarg = super.getUniformLocation("himmelFarg");
+		plats_bakgrundstextur  = super.getUniformLocation("bakgrundsTextur");
+		plats_rtextur  = super.getUniformLocation("rSampler");
+		plats_gtextur  = super.getUniformLocation("gSampler");
+		plats_btextur  = super.getUniformLocation("bSampler");
+		plats_blend_textur  = super.getUniformLocation("blendKarta");
+	}
+	
+	public void anslutTexturEnheter(){
+		super.laddaInt(plats_bakgrundstextur, 0);
+		super.laddaInt(plats_rtextur, 1);
+		super.laddaInt(plats_gtextur, 2);
+		super.laddaInt(plats_btextur, 3);
+		super.laddaInt(plats_blend_textur, 4);
+		
 	}
 
 	public void laddaHimmelFarg(float rod, float gron, float bla ){

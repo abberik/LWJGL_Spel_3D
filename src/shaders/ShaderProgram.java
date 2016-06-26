@@ -47,12 +47,16 @@ public abstract class ShaderProgram {
 		GL20.glDetachShader(programID, fragmentShaderID);
 		GL20.glDetachShader(programID, vertexShaderID);
 		GL20.glDeleteShader(vertexShaderID);
-		GL20.glDeleteShader(fragmentShaderID);
+		GL20.glDeleteShader(fragmentShaderID); 
 		GL20.glDeleteProgram(programID);
 	}
 
 	protected abstract void bindAttributes();
 
+	protected void laddaInt(int plats, int varde){
+		GL20.glUniform1i(plats, varde);
+	}
+	
 	protected void loadFloat(int plats, float varde) {
 		GL20.glUniform1f(plats, varde);
 	}
