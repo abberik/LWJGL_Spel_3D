@@ -11,109 +11,24 @@ public class Kamera {
 	private float yaw; // Den som styr vart kameran siktar.
 	private float roll;
 	
-	private static final float walkspeed = 0.5f;
-	private static final float sensitivity = 0.25f;
+	private float avstandFranSpelare = 50;
+	private float vinkelfranSpelare = 0;
 	
-	public Kamera() {
-
+	private Spelare spelare;
+	
+	public Kamera(Spelare spelare) {
+		this.spelare = spelare;
 	}
 
 	public void move() {
+		raknaUtZoom();
+		raknaUtLutningsVinkel();
+		raknaUtLutningFranSpelare();
 		
-		//Kod för att styra riktning med musen
+		float horisontelltAvstand = horisontelltAvstandFranSpelare();
+		float vertikaltAvstand = vertikaltAvstandFranSpelare();
 		
-		yaw += (Mouse.getDX() * sensitivity);
-		pitch += (Mouse.getDY() * (- sensitivity)); 
-		
-		//Kod för att styra riktning med musen
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			
-			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 90.0)));
-			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 90.0)));
-			
-			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
-			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
-		
-			position.x += forflyttning_langs_X;
-			position.z += forflyttning_langs_Z;
-			
-		}
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-
-			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 270 )));
-			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 270)));
-			
-			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
-			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
-		
-			position.x += forflyttning_langs_X;
-			position.z += forflyttning_langs_Z;
-
-		}
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_D) ) {
-
-			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw )));
-			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw )));
-			
-			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
-			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
-		
-			position.x += forflyttning_langs_X;
-			position.z += forflyttning_langs_Z;
-
-		}
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_A) ) {
-
-			float enhets_forflyttning_langs_X = (float)Math.cos(Math.toRadians((double)(yaw - 180.0)));
-			float enhets_forflyttning_langs_Z = (float)Math.sin(Math.toRadians((double)(yaw - 180.0)));
-			
-			float forflyttning_langs_X = enhets_forflyttning_langs_X * walkspeed; 
-			float forflyttning_langs_Z = enhets_forflyttning_langs_Z * walkspeed;
-		
-			position.x += forflyttning_langs_X;
-			position.z += forflyttning_langs_Z;
-		}
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-
-			position.y += 0.5f;
-
-		}
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-
-			position.y -= 0.5f;
-
-		}
-	
-		
-//		Kod för att få kameran att rotera.
-		if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
-			this.pitch -= 1.25f;
-		}
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-			
-			this.pitch += 1.25f;
-			
-		}
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_E)){
-			
-			this.yaw += 1.25f;
-			
-		}
-
-		if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
-	
-			this.yaw -= 1.25f;
-			
-		}
-
+		raknaUtKameraPosition(horisontelltAvstand, vertikaltAvstand);
 	}
 
 	public Vector3f getPosition() {
@@ -134,7 +49,8 @@ public class Kamera {
 
 	public float getYaw() {
 		return yaw;
-	}
+	}		
+
 
 	public void setYaw(float yaw) {
 		this.yaw = yaw;
@@ -147,5 +63,40 @@ public class Kamera {
 	public void setRoll(float roll) {
 		this.roll = roll;
 	}
+	
+	private void raknaUtZoom(){
+		float zoomNiva = Mouse.getDWheel() * 0.1f;
+		avstandFranSpelare += zoomNiva; //kan vändas för att vända scrollhjulets paverkan
+	}
+	
+	private void raknaUtLutningsVinkel(){
+		if(Mouse.isButtonDown(2)){
+			float lutningsVinkelForandring = Mouse.getDY() * 0.1f;
+			pitch += lutningsVinkelForandring;
+		}
+	}
+	
+	private void raknaUtLutningFranSpelare(){
+		if(Mouse.isButtonDown(2)){
+			float vinkelForandring = Mouse.getDX() * 0.3f;
+			vinkelfranSpelare += vinkelForandring;
+		}
+	}
+	
+	private float horisontelltAvstandFranSpelare(){		return (avstandFranSpelare * ((float)Math.cos(Math.toRadians((double)pitch))));		}
 
+	private float vertikaltAvstandFranSpelare(){		return (avstandFranSpelare * ((float)Math.sin(Math.toRadians((double)pitch))));		}
+	
+	private void raknaUtKameraPosition(float horisontelltAvstand,float vertikaltAvstand){
+				
+		float offset_langs_X = (float)Math.sin(Math.toRadians((double)(spelare.getRotY() + vinkelfranSpelare))) * horisontelltAvstand; 
+		float offset_langs_Z = (float)Math.cos(Math.toRadians((double)(spelare.getRotY() + vinkelfranSpelare))) * horisontelltAvstand;
+		
+		this.setPosition(new Vector3f(     spelare.getPosition().x - offset_langs_X     ,spelare.getPosition().y + vertikaltAvstand,     spelare.getPosition().z - offset_langs_Z      ));
+		
+		
+		this.setYaw(180 - spelare.getRotY() - vinkelfranSpelare);
+	}
+	
+	
 }

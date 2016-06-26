@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Entity;
 import entities.Kamera;
 import entities.Ljus;
+import entities.Spelare;
 import modeller.RaaModel;
 import modeller.TextureradModell;
 import renderingsMotor.DisplayHanterare;
@@ -49,8 +50,11 @@ public class SpelLoop {
 		Trad trad44 = new Trad(laddare, new Vector3f(60,0,30));
 		Trad trad55 = new Trad(laddare, new Vector3f(70,0,40));
 		
-		
 		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
+		
+		Spelare spelare = new Spelare(texturerad_modell, new Vector3f(0,0,0), 0, 0, 0, 1);
+		
+		
 
 		Entity entity = new Entity(texturerad_modell, new Vector3f(1, 0, -15), 0, 120, 1, 1);
 		Ljus ljus = new Ljus(new Vector3f(200, 200, 0), new Vector3f(1, 1, 1));
@@ -73,11 +77,13 @@ public class SpelLoop {
 		Terrang terrang3 = new Terrang(-1, 0, laddare, terrangPaket, blend_textur);
 		Terrang terrang4 = new Terrang(-1, -1, laddare, terrangPaket, blend_textur);
 		
-		Kamera kamera = new Kamera();
-
+		Kamera kamera = new Kamera(spelare);
+		kamera.setPosition(new Vector3f(10,10,0));
 		MastarRenderare mastarRenderare = new MastarRenderare();
 
 		Mouse.setGrabbed(true);
+		
+		
 		
 		while (!Display.isCloseRequested()) {
 
@@ -92,7 +98,11 @@ public class SpelLoop {
 				
 			}
 			
+			
+
+			spelare.forflytta();
 			kamera.move();
+			mastarRenderare.processEntity(spelare);
 			
 			mastarRenderare.processTerrang(terrang1);
 			mastarRenderare.processTerrang(terrang2);
