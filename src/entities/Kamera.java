@@ -72,8 +72,9 @@ public class Kamera {
 	private void raknaUtLutningsVinkel(){
 		if(Mouse.isButtonDown(2)){
 			float lutningsVinkelForandring = Mouse.getDY() * 0.1f;
-			pitch += lutningsVinkelForandring;
+			pitch -= lutningsVinkelForandring;
 		}
+		pitch = (float)Math.max((double)pitch, 0.1);
 	}
 	
 	private void raknaUtLutningFranSpelare(){

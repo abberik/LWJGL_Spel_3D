@@ -33,7 +33,7 @@ public class SpelLoop {
 
 		Laddare laddare = new Laddare();
 		RaaModel model = OBJLaddare.laddaObjModel("dragon", laddare);
-		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("vit"));
+		ModelTextur modelTextur = new ModelTextur(laddare.laddaTextur("rod"));
 		modelTextur.setReflektivitet(0.1f / 100f);
 		modelTextur.setShinedamper(0.1f);
 		
