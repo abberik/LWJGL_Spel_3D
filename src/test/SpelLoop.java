@@ -15,7 +15,7 @@ import renderingsMotor.DisplayHanterare;
 import renderingsMotor.Laddare;
 import renderingsMotor.MastarRenderare;
 import renderingsMotor.OBJLaddare;
-import spel_objekt.Trad;
+import spel_objekt.Skog;
 import terrang.Terrang;
 import texturer.ModelTextur;
 import texturer.TerrangTextur;
@@ -37,53 +37,32 @@ public class SpelLoop {
 		modelTextur.setReflektivitet(0.1f / 100f);
 		modelTextur.setShinedamper(0.1f);
 		
-		
-		Trad trad1 = new Trad(laddare, new Vector3f(0,0,0));
-		Trad trad2 = new Trad(laddare, new Vector3f(-10,0,10));
-		Trad trad3 = new Trad(laddare, new Vector3f(00,0,20));
-		Trad trad4 = new Trad(laddare, new Vector3f(10,0,30));
-		Trad trad5 = new Trad(laddare, new Vector3f(20,0,40));
-		
-		Trad trad11 = new Trad(laddare, new Vector3f(30,0,0));
-		Trad trad22 = new Trad(laddare, new Vector3f(40,0,10));
-		Trad trad33 = new Trad(laddare, new Vector3f(50,0,20));
-		Trad trad44 = new Trad(laddare, new Vector3f(60,0,30));
-		Trad trad55 = new Trad(laddare, new Vector3f(70,0,40));
-		
-		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
-		
-		Spelare spelare = new Spelare(texturerad_modell, new Vector3f(0,0,0), 0, 0, 0, 1);
-		
-		
-
-		Entity entity = new Entity(texturerad_modell, new Vector3f(1, 0, -15), 0, 120, 1, 1);
-		Ljus ljus = new Ljus(new Vector3f(200, 200, 0), new Vector3f(1, 1, 1));
-		
-//		Terrang terrang1 = new Terrang(0,0,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-//		Terrang terrang2 = new Terrang(0,-1,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-//		Terrang terrang3 = new Terrang(-1,0,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-//		Terrang terrang4 = new Terrang(-1,-1,laddare,new ModelTextur(laddare.laddaTextur("gras_battre")));
-		
 		TerrangTextur terrangBakgrund = new TerrangTextur(laddare.laddaTextur("orange1"));
 		TerrangTextur rTerrangTextur = new TerrangTextur(laddare.laddaTextur("jord1"));
 		TerrangTextur gTerrangTextur = new TerrangTextur(laddare.laddaTextur("gras1"));
 		TerrangTextur bTerrangTextur = new TerrangTextur(laddare.laddaTextur("sten1"));
 		
 		TerrangTexturPaket terrangPaket = new TerrangTexturPaket(terrangBakgrund, rTerrangTextur, gTerrangTextur, bTerrangTextur);
-		TerrangTextur blend_textur= new TerrangTextur(laddare.laddaTextur("blend_karta"));
+		TerrangTextur blend_textur= new TerrangTextur(laddare.laddaTextur("textur_karta"));
 		
-		Terrang terrang1 = new Terrang(0, 0, laddare, terrangPaket, blend_textur);
-		Terrang terrang2 = new Terrang(0, -1, laddare,terrangPaket, blend_textur);
-		Terrang terrang3 = new Terrang(-1, 0, laddare, terrangPaket, blend_textur);
-		Terrang terrang4 = new Terrang(-1, -1, laddare, terrangPaket, blend_textur);
+		Terrang terrang1 = new Terrang(0, 0, laddare, terrangPaket, blend_textur,"hojd_karta");
+		
+		TextureradModell texturerad_modell = new TextureradModell(model, modelTextur);
+		
+		Spelare spelare = new Spelare(texturerad_modell, new Vector3f(0,0,0), 0, 0, 0, 1);	
+
+		Entity entity = new Entity(texturerad_modell, new Vector3f(1, 0, -15), 0, 120, 1, 1);
+		Ljus ljus = new Ljus(new Vector3f(200, 200, 0), new Vector3f(1, 1, 1));
 		
 		Kamera kamera = new Kamera(spelare);
 		kamera.setPosition(new Vector3f(10,10,0));
 		MastarRenderare mastarRenderare = new MastarRenderare();
 
+		Skog skog = new Skog(laddare,"skog");
+		skog.lasSkogFil(laddare);
 		Mouse.setGrabbed(true);
 		
-		
+		boolean wroteforest = false;
 		
 		while (!Display.isCloseRequested()) {
 
@@ -98,28 +77,30 @@ public class SpelLoop {
 				
 			}
 			
+			if(Keyboard.isKeyDown(Keyboard.KEY_P)){
+				
+				skog.skapaTrad(laddare, new Vector3f(spelare.getPosition().getX(),spelare.getPosition().getY(),spelare.getPosition().getZ()));
+				
+			}
+			
+			
+			
+			if(Keyboard.isKeyDown(Keyboard.KEY_O) && !wroteforest){
+				
+				skog.skrivSkogFil(laddare);
+				
+				wroteforest = true;
+				
+			}
 			
 
-			spelare.forflytta();
+			spelare.forflytta(terrang1);
 			kamera.move();
 			mastarRenderare.processEntity(spelare);
 			
 			mastarRenderare.processTerrang(terrang1);
-			mastarRenderare.processTerrang(terrang2);
-			mastarRenderare.processTerrang(terrang3);
-			mastarRenderare.processTerrang(terrang4);
-			
-			trad1.rendera(mastarRenderare);
-			trad2.rendera(mastarRenderare);
-			trad3.rendera(mastarRenderare);
-			trad4.rendera(mastarRenderare);
-			trad5.rendera(mastarRenderare);
-			
-			trad11.rendera(mastarRenderare);
-			trad22.rendera(mastarRenderare);
-			trad33.rendera(mastarRenderare);
-			trad44.rendera(mastarRenderare);
-			trad55.rendera(mastarRenderare);
+
+			skog.processera(mastarRenderare);
 			
 			mastarRenderare.processEntity(entity);
 			mastarRenderare.render(ljus, kamera);

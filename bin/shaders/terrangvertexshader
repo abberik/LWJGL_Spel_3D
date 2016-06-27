@@ -16,8 +16,8 @@ uniform mat4 projektionsmatris;
 uniform mat4 vymatris;
 uniform vec3 ljus_position;
 
-const float dimm_densitet = 0.007;
-const float gradient = 1.5;
+const float dimm_densitet = 0.001;
+const float gradient = 15;
 
 void main(void){
 	

@@ -5,11 +5,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 import modeller.TextureradModell;
 import renderingsMotor.DisplayHanterare;
+import terrang.Terrang;
 
 public class Spelare extends Entity{
 
-	private static final float GA_HASTIGHET = 20;
-	private static final float GIR_HASTIGHET = 160;
+	private static final float GA_HASTIGHET = 120;
+	private static final float GIR_HASTIGHET = 200;
 	private static float GRAVITATION = -50;
 	private static final float HOPP_EFFEKT = 30;
 	
@@ -24,7 +25,7 @@ public class Spelare extends Entity{
 		super(model, position, rotX, rotY, rotZ, scale);
 	}
 	
-	public void forflytta(){
+	public void forflytta(Terrang terrang){
 			
 		kontrolleraInput();
 		
@@ -36,9 +37,10 @@ public class Spelare extends Entity{
 		
 		nuvarandeYHastighet += (GRAVITATION * DisplayHanterare.getFrameTimeSeconds() );
 		super.okaPosition(dX, nuvarandeYHastighet * DisplayHanterare.getFrameTimeSeconds(), dZ);
-		if(super.getPosition().y<TERRAIN){
+		float terrangHojd =  terrang.getHojdAvTerrang(super.getPosition().getX(),super.getPosition().getZ() );
+		if(super.getPosition().y<terrangHojd){
 			nuvarandeYHastighet = 0;
-			super.getPosition().y = TERRAIN;
+			super.getPosition().y = terrangHojd;
 			arILuften = false;
 		}
 		
