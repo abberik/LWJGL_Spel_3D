@@ -19,7 +19,7 @@ public class Terrang {
 
 	private static final float SIZE = 800;
 
-	private static final float MAX_HOJD = 10;
+	private static final float MAX_HOJD = 40;
 	private static final float MAX_FARG = (float)Math.pow(256, 3);
 	
 	

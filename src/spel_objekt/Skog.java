@@ -72,8 +72,7 @@ public class Skog {
 					float x = ((float)(Double.parseDouble(radData[1])));
 					float y = ((float)(Double.parseDouble(radData[2])));
 					float z = ((float)(Double.parseDouble(radData[3])));
-					
-					
+				
 					Trad trad = new Trad(laddare, new Vector3f(x,y,z));
 					
 					skog.add(trad);
@@ -111,9 +110,6 @@ public class Skog {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 		
 	}
 	

@@ -15,7 +15,6 @@ import renderingsMotor.DisplayHanterare;
 import renderingsMotor.Laddare;
 import renderingsMotor.MastarRenderare;
 import renderingsMotor.OBJLaddare;
-import spel_objekt.Skog;
 import terrang.Terrang;
 import texturer.ModelTextur;
 import texturer.TerrangTextur;
@@ -58,8 +57,6 @@ public class SpelLoop {
 		kamera.setPosition(new Vector3f(10,10,0));
 		MastarRenderare mastarRenderare = new MastarRenderare();
 
-		Skog skog = new Skog(laddare,"skog");
-		skog.lasSkogFil(laddare);
 		Mouse.setGrabbed(true);
 		
 		boolean wroteforest = false;
@@ -77,30 +74,11 @@ public class SpelLoop {
 				
 			}
 			
-			if(Keyboard.isKeyDown(Keyboard.KEY_P)){
-				
-				skog.skapaTrad(laddare, new Vector3f(spelare.getPosition().getX(),spelare.getPosition().getY(),spelare.getPosition().getZ()));
-				
-			}
-			
-			
-			
-			if(Keyboard.isKeyDown(Keyboard.KEY_O) && !wroteforest){
-				
-				skog.skrivSkogFil(laddare);
-				
-				wroteforest = true;
-				
-			}
-			
-
 			spelare.forflytta(terrang1);
 			kamera.move();
 			mastarRenderare.processEntity(spelare);
 			
 			mastarRenderare.processTerrang(terrang1);
-
-			skog.processera(mastarRenderare);
 			
 			mastarRenderare.processEntity(entity);
 			mastarRenderare.render(ljus, kamera);
