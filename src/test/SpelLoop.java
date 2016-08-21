@@ -20,6 +20,9 @@ import texturer.ModelTextur;
 import texturer.TerrangTextur;
 import texturer.TerrangTexturPaket;
 
+//slick http://slick.ninjacave.com/slick-util.jar
+//lwjgl https://sourceforge.net/projects/java-game-lib/files/Official%20Releases/LWJGL%202.9.1/lwjgl-2.9.1.zip/download
+
 public class SpelLoop {
 
 	public static void main(String[] args) {
